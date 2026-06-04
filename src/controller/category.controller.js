@@ -31,3 +31,27 @@ export const getcategory = async (req, res)=>{
         });
     };
 };
+
+export const getcategoryId = async (req, res) => {
+    try {
+        const category = await categoryModel.findById(req.params.id);
+
+        if (!category) {
+            return res.status(404).json({
+                success: false,
+                message: "Category not found"
+            });
+        }
+
+        return res.status(200).json({
+            success: true,
+            category
+        });
+
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: error.message
+        });
+    }
+};

@@ -43,9 +43,7 @@ export const getUser = async (req, res) => {
             message: "Server Error",
             error: error.message
         });
-
     }
-
 };
 
 export const getByid = async (req, res) => {

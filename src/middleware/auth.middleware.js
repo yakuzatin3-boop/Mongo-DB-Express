@@ -2,7 +2,7 @@
 import jwt from "jsonwebtoken";
 import userModel from "../model/user.model.js";
 
-// Verify Login
+// Login
 export const protect = async (req, res, next) => {
   try {
     let token;
@@ -22,7 +22,7 @@ export const protect = async (req, res, next) => {
       });
     }
 
-    // Verify token
+    // token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
     // Find user
@@ -45,7 +45,7 @@ export const protect = async (req, res, next) => {
   }
 };
 
-// Admin Middleware
+// Admin route
 export const admin = async (req, res, next) => {
   try {
     if (req.user && req.user.role === "admin") {
@@ -64,7 +64,7 @@ export const admin = async (req, res, next) => {
   }
 };
 
-// Seller Middleware
+// Seller
 export const seller = async (req, res, next) => {
   try {
     if (
@@ -86,7 +86,7 @@ export const seller = async (req, res, next) => {
   }
 };
 
-// User Middleware
+// User
 export const userOnly = async (req, res, next) => {
     try {
         const token = req.headers.authorization?.split(" ")[1];

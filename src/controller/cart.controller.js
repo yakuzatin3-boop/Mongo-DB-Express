@@ -15,14 +15,14 @@ export const addtocart = async (req, res) => {
 
     let cart = await cartModel.findOne({ user: userId });
 
-    // 🆕 CREATE CART
+  
     if (!cart) {
       cart = await cartModel.create({
         user: userId,
         items: [{ product, quantity }]
       });
     } 
-    // 🔄 UPDATE CART
+  
     else {
       const index = cart.items.findIndex(
         (item) => item.product.toString() === product

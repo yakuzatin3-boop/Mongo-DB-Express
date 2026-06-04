@@ -38,7 +38,6 @@ export const createorder = async (req, res) => {
             })
         );
 
-        // Create Order
         const order = await orderModel.create({
             user: userId,
             products: productDetails,
