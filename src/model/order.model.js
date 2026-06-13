@@ -31,6 +31,12 @@ const orderSchema = new mongoose.Schema(
         required: true
     },
 
+    shippingAddress: {
+        name: String,
+        phone: String,
+        address: String
+    },
+
     // 💳 PAYMENT METHOD
     paymentMethod: {
         type: String,
@@ -58,7 +64,7 @@ const orderSchema = new mongoose.Schema(
     // 📦 ORDER STATUS
     status: {
         type: String,
-        enum: ["pending", "shipping", "delivered", "cancelled"],
+        enum: ["pending", "processing", "shipped", "delivered", "cancelled"],
         default: "pending"
     }
 },

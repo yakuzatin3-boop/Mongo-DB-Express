@@ -2,7 +2,7 @@
 import jwt from "jsonwebtoken";
 import userModel from "../model/user.model.js";
 
-// Login
+
 export const protect = async (req, res, next) => {
   try {
     let token;
@@ -14,7 +14,7 @@ export const protect = async (req, res, next) => {
       token = req.headers.authorization.split(" ")[1];
     }
 
-    // No token
+
     if (!token) {
       return res.status(401).json({
         success: false,
@@ -22,11 +22,10 @@ export const protect = async (req, res, next) => {
       });
     }
 
-    // token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    // Find user
-    req.user = await User.findById(decoded.id).select("-password");
+  
+    req.user = await userModel.findById(decoded.id).select("-password");
 
     if (!req.user) {
       return res.status(404).json({
@@ -89,12 +88,13 @@ export const seller = async (req, res, next) => {
 // User
 export const userOnly = async (req, res, next) => {
     try {
-        const token = req.headers.authorization?.split(" ")[1];
+        const authHeader = req.headers.authorization;
+        const token = authHeader?.split(" ")[1];
 
         if (!token) {
             return res.status(401).json({
                 success: false,
-                message: "No token"
+                message: "No token provided. Use Authorization: Bearer <token>"
             });
         }
 
@@ -105,7 +105,7 @@ export const userOnly = async (req, res, next) => {
         if (!user) {
             return res.status(404).json({
                 success: false,
-                message: "User Not Found"
+                message: "User not found"
             });
         }
 
@@ -116,7 +116,8 @@ export const userOnly = async (req, res, next) => {
     } catch (error) {
         return res.status(401).json({
             success: false,
-            message: "Invalid token"
+            message: "Invalid token",
+            error: error.message
         });
     }
 };

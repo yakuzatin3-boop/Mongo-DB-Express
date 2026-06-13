@@ -10,6 +10,7 @@ import categoryroute from './src/route/category.route.js';
 import productroute from './src/route/product.route.js';
 import cartroute from './src/route/cart.route.js';
 import orderroute from './src/route/order.route.js';
+import Brandrouter from './src/route/brand.route.js';
 
 dotenv.config();
 
@@ -34,6 +35,7 @@ app.use('/api', categoryroute);
 app.use('/api', productroute);
 app.use('/api/cart', cartroute);
 app.use('/api', orderroute);
+app.use('/api', Brandrouter);
 
 const PORT = process.env.PORT || 3000;
 

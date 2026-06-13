@@ -9,8 +9,8 @@ function formatField(id, value) {
 /**
  * 🔥 AUTO KHQR GENERATOR (ORDER-BASED)
  */
-export async function generateKHQRFromOrder(order) {
-    const transactionId = uuidv4();
+export async function generateKHQRFromOrder(order, transactionId = null) {
+    const txId = transactionId || uuidv4();
 
     let payload = "";
 
@@ -45,7 +45,7 @@ export async function generateKHQRFromOrder(order) {
     const qrImage = await QRCode.toDataURL(payload);
 
     return {
-        transactionId,
+        transactionId: txId,
         payload,
         qrImage
     };

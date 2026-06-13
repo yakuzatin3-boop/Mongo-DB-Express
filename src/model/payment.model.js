@@ -1,5 +1,3 @@
-// models/payment.model.js
-
 import mongoose from "mongoose";
 
 const paymentSchema = new mongoose.Schema(
@@ -18,8 +16,14 @@ const paymentSchema = new mongoose.Schema(
 
     paymentMethod: {
         type: String,
-        enum: ["ABA", "ACLEDA", "Cash", "Credit Card"],
-        default: "Cash"
+        enum: [
+            "bakong",
+            "ABA",
+            "ACLEDA",
+            "cash",
+            "credit_card"
+        ],
+        default: "bakong"
     },
 
     transactionId: {
@@ -33,13 +37,23 @@ const paymentSchema = new mongoose.Schema(
 
     status: {
         type: String,
-        enum: ["pending", "paid", "failed"],
+        enum: [
+            "pending",
+            "paid",
+            "failed"
+        ],
         default: "pending"
+    },
+
+    paidAt: {
+        type: Date
     }
 },
 {
     timestamps: true
 }
 );
+
+paymentSchema.index({ transactionId: 1 }, { unique: true, sparse: true });
 
 export default mongoose.model("Payment", paymentSchema);
