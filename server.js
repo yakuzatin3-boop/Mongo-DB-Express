@@ -11,6 +11,7 @@ import productroute from './src/route/product.route.js';
 import cartroute from './src/route/cart.route.js';
 import orderroute from './src/route/order.route.js';
 import Brandrouter from './src/route/brand.route.js';
+import { verifyPayment } from './src/controller/order.controller.js';
 
 dotenv.config();
 

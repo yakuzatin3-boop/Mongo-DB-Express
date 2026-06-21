@@ -10,51 +10,58 @@ export const createproduct = async (req, res) =>{
         })
     }catch(error){
         res.status(500).json({
-            sucess: false,
+            success: false,
             message: error.message
         })
     }
 };
-export const getproduct = async (req, res)=>{
-    try {
+export const getproduct = async (req, res) => {
+  try {
+    const { brand, category } = req.query;
 
-        const products = await productModel
-        .find(req.body)
-        .populate('category')
-        .populate('user', '-password');
+    let filter = {};
 
-        res.status(200).json({
-            sucess: true,
-            products
-        })
-    }catch(error){
-        res.status(500).json({
-            sucess: false,
-            message:error.message
-        })
-    }
+    if (brand) filter.brand = brand;
+    if (category) filter.category = category;
+
+    const products = await productModel
+      .find(filter)
+      .populate("brand")
+      .populate("category");
+
+    res.status(200).json({
+      success: true,
+      products,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
 };
 export const getsingleproduct = async (req, res)=>{
     try{
 
         const product = await productModel
         .findById(req.params.id)
+        .populate("brand")
         .populate('category')
         .populate('user', '-password')
 
         if(!product){
             return res.status(404).json({
-                sucess: false,
+                success: false,
                 message: 'Product not found Ah poy'
             })
         }
         res.status(200).json({
-            sucess: true,
+            success: true,
             product
         })
     }catch(error){
         res.status(500).json({
-            sucess: true,
+            success: true,
             message: error.message
         })
     }

@@ -16,20 +16,28 @@ export const createcategory = async (req, res) => {
     };
 };
 
-export const getcategory = async (req, res)=>{
-    try{
-        const categorys = await categoryModel.find();
-        res.json({
-            sucess: true,
-            categorys
-        });
+export const getcategory = async (req, res) => {
+  try {
+    const { brand } = req.query;
 
-    }catch(error){
-        res.status(500).json({
-            sucess: false,
-            message: error.message
-        });
-    };
+    let filter = {};
+
+    if (brand) {
+      filter.brand = brand;
+    }
+
+    const categorys = await categoryModel.find(filter);
+
+    res.json({
+      success: true,
+      categorys,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
 };
 
 export const getcategoryId = async (req, res) => {

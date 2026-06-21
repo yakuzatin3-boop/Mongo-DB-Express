@@ -542,6 +542,7 @@ export const generateOrderQr = async (req, res) => {
             return res.status(403).json({ success: false, message: "Not allowed" });
         }
 
+        // force payment method to bakong if needed
         if (order.paymentMethod !== "bakong") {
             order.paymentMethod = "bakong";
         }

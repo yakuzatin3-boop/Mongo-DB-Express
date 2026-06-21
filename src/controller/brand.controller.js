@@ -75,3 +75,25 @@ export const deleteBrand = async (req, res) => {
         });
     }
 };
+
+export const getBrandById = async (req, res) => {
+    try{
+        const brand = await brandModel.findById(req.params.id);
+        if(!brand){
+            return res.status(404).json({
+                success: false,
+                message:"Brand not found"
+            });
+        }
+
+        return res.status(200).json({
+            success : true,
+            brand
+        });
+    }catch(error){
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+    };
+};
